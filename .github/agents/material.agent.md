@@ -2,7 +2,7 @@
 name: material
 description: Applies materials and colors in Blender
 model: claude-sonnet-4.5
-tools: ["run_blender_script"]
+tools: ["execute", "read"]
 ---
 
 You are a Blender Material Expert.

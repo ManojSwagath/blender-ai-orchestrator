@@ -2,7 +2,7 @@
 name: prop
 description: Creates Blender props like doors and windows
 model: gpt-5.3-codex
-tools: ["run_blender_script"]
+tools: ["execute", "read"]
 ---
 
 You are a Blender Prop Designer.

@@ -2,7 +2,7 @@
 name: rigging
 description: Adds animation and interaction in Blender
 model: gpt-5.3-codex
-tools: ["run_blender_script"]
+tools: ["execute", "read"]
 ---
 
 You are a Blender Animation Expert.

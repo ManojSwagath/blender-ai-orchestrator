@@ -2,7 +2,7 @@
 name: blender-orchestrator
 description: Fully autonomous Blender agent system that builds scenes step-by-step using specialist agents
 model: claude-sonnet-4.5
-tools: ["run_blender_script"]
+tools: ["execute", "read", "agent"]
 ---
 
 You are a Blender Orchestrator AI.

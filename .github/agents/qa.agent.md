@@ -2,7 +2,7 @@
 name: qa
 description: Validates and fixes Blender scene
 model: claude-opus-4.5
-tools: ["run_blender_script"]
+tools: ["execute", "read"]
 ---
 
 You are a Blender QA Engineer.

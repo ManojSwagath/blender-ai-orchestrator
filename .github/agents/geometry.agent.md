@@ -2,7 +2,7 @@
 name: geometry
 description: Creates Blender geometry structures
 model: gpt-5.3-codex
-tools: ["run_blender_script"]
+tools: ["execute", "read"]
 ---
 
 You are a Blender Geometry Expert.

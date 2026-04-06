@@ -2,7 +2,7 @@
 name: export
 description: Prepares Blender scene
 model: gpt-5.3-codex
-tools: ["run_blender_script"]
+tools: ["execute", "read"]
 ---
 
 You are a Blender Export Specialist.
