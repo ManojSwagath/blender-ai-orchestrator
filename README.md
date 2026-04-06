@@ -9,7 +9,9 @@ Fully autonomous Blender scene creation system using GitHub Copilot CLI's multi-
 
 - **🎯 Autonomous Workflow**: Automatically builds complete Blender scenes from text descriptions
 - **🤖 7 Specialized Agents**: Each agent handles a specific aspect of scene creation
-- **📐 Strict Pipeline**: Geometry → Material → Props → Rigging → Export → QA
+- **⚡ Parallel Team Mode**: Independent subagent tasks are generated in parallel for higher throughput
+- **🧠 Brainstorm Variants**: Prompts asking for variants automatically trigger concept brainstorming and best-option selection
+- **📐 Structured Waves**: Geometry → (Prop + Material) → (Rigging + Material Touch-up) → Export → QA
 - **🔄 Auto-Retry**: Intelligent error handling with automatic retries
 - **✅ Quality Assurance**: Built-in validation and issue fixing
 
@@ -22,12 +24,16 @@ User Prompt
      ↓
 [Orchestrator Agent]
      ↓
-  ┌──┴──┬──────┬────────┬─────────┬────────┐
-  ↓     ↓      ↓        ↓         ↓        ↓
-Geometry Material Prop Rigging Export    QA
-  ↓     ↓      ↓        ↓         ↓        ↓
-  └──┬──┴──────┴────────┴─────────┴────────┘
-     ↓
+Geometry
+    ↓
+Parallel Wave 1: Prop + Material
+    ↓
+Parallel Wave 2: Rigging + Material Touch-up
+    ↓
+Export
+    ↓
+QA Loop
+    ↓
 Complete Scene
 ```
 
@@ -84,13 +90,13 @@ copilot
 
 | Agent | Description | Model |
 |-------|-------------|-------|
-| **blender-orchestrator** | Main coordinator | Claude Sonnet 4.5 |
+| **blender-orchestrator** | Main coordinator | Gemini 3.1 Pro |
 | **geometry** | Creates structures | GPT-5.3 Codex |
-| **material** | Applies colors/materials | Claude Sonnet 4.5 |
+| **material** | Applies colors/materials | GPT-5.3 Codex |
 | **prop** | Creates doors, windows, objects | GPT-5.3 Codex |
 | **rigging** | Adds animation/interaction | GPT-5.3 Codex |
 | **export** | Prepares and cleans scene | GPT-5.3 Codex |
-| **qa** | Validates and fixes issues | Claude Opus 4.5 |
+| **qa** | Validates and fixes issues | Gemini 3.1 Pro |
 
 ## 📝 Example Prompts
 
@@ -99,21 +105,22 @@ copilot
 - "Make a medieval tower with spiral stairs"
 - "Create a cozy living room with furniture"
 - "Build a sci-fi corridor with doors"
+- "Create a house like granny has. Brainstorm and make another house model in Blender."
 
 ## 🔧 How It Works
 
-1. **GEOMETRY** → Builds base structure (walls, floors)
-2. **MATERIAL** → Applies colors and materials
-3. **PROP** → Adds objects (doors, windows, furniture)
-4. **RIGGING** → Makes objects interactive
+1. **ORCHESTRATE** → Parses prompt, optionally brainstorms variants, selects one concept
+2. **GEOMETRY** → Builds base structure (walls, floors, roof volumes)
+3. **PARALLEL BUILD WAVE** → Calls **PROP** and **MATERIAL** in parallel, then executes in safe order
+4. **PARALLEL POLISH WAVE** → Calls **RIGGING** and **MATERIAL TOUCH-UP** in parallel, then executes in safe order
 5. **EXPORT** → Cleans and prepares scene
-6. **QA** → Validates and fixes any issues
+6. **QA LOOP** → Validates, fixes issues, and repeats until clean or pass limit reached
 
 Each step:
 - Gets Python (bpy) code from specialized agent
 - Executes in Blender
 - Validates result
-- Auto-retries on failure (max 3 attempts)
+- Auto-retries on failure (max 3 attempts per worker script)
 
 ## 🛠️ Tools
 
